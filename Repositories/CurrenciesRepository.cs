@@ -7,11 +7,11 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using CurrencyConverter.Interfaces;
-using CurrencyConverter.Models;
-using CurrencyConverter.Models.ApiModels;
+using Interfaces;
+using Models;
+using Models.ApiModels;
 
-namespace CurrencyConverter.Repositories
+namespace Repositories
 {
     public class CurrenciesRepository : ICurrenciesRepository
     {

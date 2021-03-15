@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Interfaces;
+using Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CurrencyConverter.Interfaces;
-using CurrencyConverter.Models;
 
-namespace CurrencyConverter.Services
+namespace Services
 {
     public class CurrenciesService : ICurrenciesService
     {

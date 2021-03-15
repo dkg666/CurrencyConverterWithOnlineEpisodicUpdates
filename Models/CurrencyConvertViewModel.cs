@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CurrencyConverter.Models
+namespace Models
 {
     public class CurrencyConvertViewModel
     {

@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using CurrencyConverter.Interfaces;
-using CurrencyConverter.Models;
+using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models;
 
 namespace CurrencyConverter.Controllers
 {

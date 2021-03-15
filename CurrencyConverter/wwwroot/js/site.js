@@ -20,7 +20,7 @@ function Filter() {
         if (results === 0)
             $('#infoModal').modal('show');
 
-        $('#selected-rate').text(results);
+        $('#selected-rate').text(Number(results).toFixed(4));
     });
 };
 

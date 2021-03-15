@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CurrencyConverter.Models;
 
-namespace CurrencyConverter.Interfaces
+namespace Interfaces
 {
     public interface ICurrenciesRepository
     {

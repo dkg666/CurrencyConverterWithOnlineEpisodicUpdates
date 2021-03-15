@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CurrencyConverter.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Repositories;
 
 namespace CurrencyConverterTests.Repositories
 {

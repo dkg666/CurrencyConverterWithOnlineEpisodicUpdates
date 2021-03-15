@@ -1,7 +1,7 @@
 ﻿using System;
-using CurrencyConverter.Repositories;
-using CurrencyConverter.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Repositories;
+using Services;
 
 namespace CurrencyConverterTests.Services
 {

@@ -1,4 +1,4 @@
-namespace CurrencyConverter.Models
+namespace Models
 {
     public class ErrorViewModel
     {
