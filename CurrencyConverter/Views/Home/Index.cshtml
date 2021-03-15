@@ -3,50 +3,98 @@
     ViewData["Title"] = "Currency Converter";
 }
 
-<div class="text-center form-group">
-    <h1 class="display-4">Currency Converter</h1>
-    <p>Selected currencies pair rate <q id="selected-rate">@Model?.ConvertionRate</q>.</p>
+@if (!string.IsNullOrWhiteSpace(Model?.ErrorMessage))
+{
+    <h1 class="text-danger">Error.</h1>
+    <h2 class="text-danger">@(Model.ErrorMessage)</h2>
+}
 
-    @using (Html.BeginForm())
-    {
-        <div class="form-group row">
-            @Html.LabelFor(model => model.From, new { @class = "col-sm-2 col-form-label" })
-            <div class="col-sm-3">
-                @Html.DropDownListFor(model => model.From, new SelectList(Model.Rates.Select(r => r.Currency).OrderBy(r => r), Model.From), new { @class = "form-control w-75" })
-                @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
-            </div>
 
-            @Html.LabelFor(model => model.Amount, new { @class = "col-sm-3 col-form-label" })
-            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @type = "number", @class = "form-control w-50 col-sm-4 " } })
-            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+@if (Model != null)
+{
+    <div class="text-center form-group">
+        <h1 class="display-4">Currency Converter</h1>
+        <p>Exchange rate <q id="selected-rate" class="font-weight-bold">@Model.ConvertionRate</q>.</p>
 
-        </div>
-        <div class="form-group row">
-            @Html.LabelFor(model => model.To, new { @class = "col-sm-2 col-form-label" })
-            <div class="col-sm-3">
-                @Html.DropDownListFor(model => model.To, new SelectList(Model.Rates.Select(r => r.Currency).OrderBy(r => r), Model.To), new { @class = "form-control w-75" })
-                @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
-            </div>
-
-            @Html.LabelFor(model => model.Date, new { @class = "col-sm-3 col-form-label" })
-            @Html.EditorFor(model => model.Date,  new { htmlAttributes = new { @type = "text", @class = "datepicker form-control w-50 col-sm-4" } })
-            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-        </div>
-
-        <br /><br />
-        <button type="submit" name="action" class="btn btn-outline-primary">
-            Convert
-        </button>
-    }
-
-    <h1 class="display-4">Converted amount : @($"{Model.ConvertedAmount:0.0000}")</h1>
-
-    <h1 class="display-4">Currency Rates (@Model.Date.Date.ToString("yyyy-MM-dd"))</h1>
-
-    <ul class="list-group">
-        @foreach (var rate in Model.Rates.OrderBy(r => r.Currency))
+        @using (Html.BeginForm())
         {
-            <li class="list-group-item">@rate.Currency : @rate.Rate</li>
+            @Html.AntiForgeryToken()
+            <div class="form-group row">
+                @Html.LabelFor(model => model.From, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-3">
+                    @Html.DropDownListFor(model => model.From, new SelectList(Model.Rates.Select(r => r.Currency).OrderBy(r => r), Model.From), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+                </div>
+        
+                @Html.LabelFor(model => model.Amount, new { @class = "col-sm-3 col-form-label" })
+
+                <div class="col-sm-4">
+
+                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { type = "number", @class = "form-control " } })
+                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                </div>
+
+
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.To, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-3">
+                    @Html.DropDownListFor(model => model.To, new SelectList(Model.Rates.Select(r => r.Currency).OrderBy(r => r), Model.To), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.LabelFor(model => model.Date, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-4">
+
+                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { type = "text", @class = "datepicker form-control" } })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <br /><br />
+            <button type="submit" name="action" class="btn btn-primary">
+                Convert
+            </button>
+            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#currentRates" aria-expanded="false" aria-controls="currentRates">
+                Show rates used during conversion
+            </button>
         }
-    </ul>
-</div>
+
+        <h1 class="display-4">Converted amount : @($"{Model.ConvertedAmount:0.0000}")</h1>
+        
+        
+
+        <div class="collapse" id="currentRates">
+        <h1 class="display-4">Currency Rates (@Model.Date.Date.ToString("yyyy-MM-dd"))</h1>
+
+        <ul class="list-group collapse" id="currentRates">
+            @foreach (var rate in Model.Rates.OrderBy(r => r.Currency))
+            {
+                <li class="list-group-item">@rate.Currency : @rate.Rate</li>
+            }
+        </ul>
+    </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Information</h4>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>No currency rate for current date</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

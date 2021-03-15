@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using CurrencyConverter.Repositories;
 using CurrencyConverter.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

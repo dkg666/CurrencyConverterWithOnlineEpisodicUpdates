@@ -42,7 +42,7 @@ namespace CurrencyConverter.Services
                 if (to.Equals("EUR", StringComparison.InvariantCultureIgnoreCase) && fromRate.HasValue)
                     return amount / fromRate.Value;
 
-                if (toRate.HasValue && fromRate.HasValue) 
+                if (toRate.HasValue && fromRate.HasValue && fromRate.Value > 0) 
                     return amount * toRate.Value / fromRate.Value;
             }
             catch { return 0; }

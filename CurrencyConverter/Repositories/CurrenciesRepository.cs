@@ -17,8 +17,6 @@ namespace CurrencyConverter.Repositories
     {
         private readonly HttpClient _exchangeRatesHttpClient;
 
-        private const string LatestExchangeRatesPath = "/latest";
-        private const string LatestExchangeRatesInCurrencyPath = "/latest?base=";
         private const string BaseExchangeRatesApiUrl = @"https://api.exchangeratesapi.io/";
 
         private readonly Dictionary<string, HashSet<ExchangeRate>> _exchangeRatesCache = new();

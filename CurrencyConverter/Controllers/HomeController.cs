@@ -39,9 +39,9 @@ namespace CurrencyConverter.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Error", new ErrorViewModel
+                return View(new ExchangeRatesViewModel
                 {
-                    Message = "One or more selected values are invalid"
+                    ErrorMessage = "One or more selected values are invalid"
                 });
             }
 
@@ -64,7 +64,16 @@ namespace CurrencyConverter.Controllers
         [HttpGet]
         public async Task<JsonResult> GetCurrencyRate(string from, string to, DateTime date)
         {
-            var rates = await _currenciesService.GetExchangeRates(date);
+            if (string.IsNullOrWhiteSpace(from) || string.IsNullOrWhiteSpace(to))
+                return Json("");
+
+            if (!string.IsNullOrWhiteSpace(from) && from.Length != 3 || !string.IsNullOrWhiteSpace(to) && to.Length != 3)
+                return Json("");
+
+            if (date < new DateTime(2000, 01, 01) || date > DateTime.Now)
+                return Json("");
+
+            await _currenciesService.GetExchangeRates(date);
 
             var rate = _currenciesService.GetExchangeRate(from, to, date);
 
