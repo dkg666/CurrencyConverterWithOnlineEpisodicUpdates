@@ -1,0 +1,52 @@
+﻿@model CurrencyConverter.Models.ExchangeRatesViewModel
+@{
+    ViewData["Title"] = "Currency Converter";
+}
+
+<div class="text-center form-group">
+    <h1 class="display-4">Currency Converter</h1>
+    <p>Selected currencies pair rate <q id="selected-rate">@Model?.ConvertionRate</q>.</p>
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-group row">
+            @Html.LabelFor(model => model.From, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-3">
+                @Html.DropDownListFor(model => model.From, new SelectList(Model.Rates.Select(r => r.Currency).OrderBy(r => r), Model.From), new { @class = "form-control w-75" })
+                @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.Amount, new { @class = "col-sm-3 col-form-label" })
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @type = "number", @class = "form-control w-50 col-sm-4 " } })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.To, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-3">
+                @Html.DropDownListFor(model => model.To, new SelectList(Model.Rates.Select(r => r.Currency).OrderBy(r => r), Model.To), new { @class = "form-control w-75" })
+                @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.Date, new { @class = "col-sm-3 col-form-label" })
+            @Html.EditorFor(model => model.Date,  new { htmlAttributes = new { @type = "text", @class = "datepicker form-control w-50 col-sm-4" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+
+        <br /><br />
+        <button type="submit" name="action" class="btn btn-outline-primary">
+            Convert
+        </button>
+    }
+
+    <h1 class="display-4">Converted amount : @($"{Model.ConvertedAmount:0.0000}")</h1>
+
+    <h1 class="display-4">Currency Rates (@Model.Date.Date.ToString("yyyy-MM-dd"))</h1>
+
+    <ul class="list-group">
+        @foreach (var rate in Model.Rates.OrderBy(r => r.Currency))
+        {
+            <li class="list-group-item">@rate.Currency : @rate.Rate</li>
+        }
+    </ul>
+</div>
