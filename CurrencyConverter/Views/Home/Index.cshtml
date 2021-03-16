@@ -14,7 +14,7 @@
 {
     <div class="text-center form-group">
         <h1 class="display-4">Currency Converter</h1>
-        <p>Exchange rate <q id="selected-rate" class="font-weight-bold">@Model.ConvertionRate</q></p>
+        <p>Exchange rate is <span id="selected-rate" class="font-weight-bold">@Model.ConvertionRate</span></p>
 
         @using (Html.BeginForm())
         {
@@ -55,7 +55,7 @@
             <h1 class="display-4 pt-3 pb-3">Converted amount: @($"{Model.ConvertedAmount:0.00}")</h1>
 
             <button type="submit" name="action" class="btn btn-primary">
-                Convert & Update Rates Table
+                Convert
             </button>
             <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#currentRates" aria-expanded="false" aria-controls="currentRates">
                 Show/Hide rates used during conversion
